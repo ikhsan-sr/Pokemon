@@ -19,7 +19,7 @@ export default function App() {
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/:id" element={<Detail />} />
+            <Route path="/:name" element={<Detail />} />
             <Route path="/pokebag" element={<Pokebag />} />
           </Routes>
         </Suspense>

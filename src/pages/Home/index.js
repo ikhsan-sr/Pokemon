@@ -1,45 +1,7 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
-// import { Query } from 'react-apollo'
-// import gql from 'graphql-tag'
-
-// import { useQuery } from 'react-apollo';
-
-
-// client.query({
-//     query: gql`
-//       {
-//         pokemons {
-//           results {
-//             name
-//             image
-//           }
-//         }
-//       }
-//     `
-//   }).then(result => console.log(result));
-
-// const pokemonsQuery = gql`
-// {
-//     pokemons {
-//       results {
-//         name
-//         image
-//       }
-//     }
-//   }
-// `
-
-const POKEMONS = gql`
-  query GetPokemons {
-    pokemons {
-      results {
-        name
-        image
-      }
-    }
-}
-`;
+import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client'
+import { POKEMONS } from '../../query';
 
 export default function HomePage() {
   const { loading, error, data } = useQuery(POKEMONS);
@@ -48,23 +10,8 @@ export default function HomePage() {
   if (error) return <p>Error :(</p>;
 
   return data.pokemons.results.map((pokemon, index) => (
-    <div key={index}>
+    <Link to={`/${pokemon.name}`}key={index}>
       <h1>{pokemon.name}</h1>
-    </div>
+    </Link>
   ))
-
-  // return (
-  //   <Query query={pokemonsQuery} notifyOnNetworkStatusChange={true}>
-  //      {({ loading, error, data }) => {
-  //         if(loading) return <p>Loading...</p>
-  //         if(error) return <p>Error...</p>
-
-  //         if(data) return data.pokemons.results.map((pokemon, index) => (
-  //           <div key={index}>
-  //             <h1>{pokemon.name}</h1>
-  //           </div>
-  //         ))
-  //      }}
-  //   </Query>
-  // )
 }
