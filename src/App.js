@@ -1,11 +1,6 @@
 import React, { lazy, Suspense } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";import ApolloClient  from 'apollo-boost';
-import gql from 'graphql-tag'
-import { ApolloProvider } from 'react-apollo'
+import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import PageLoader from "./components/commons/Loader/PageLoader";
 
 const Home = lazy(() => import("./pages/Home/index"));
@@ -13,21 +8,9 @@ const Detail = lazy(() => import("./pages/Detail/index"));
 const Pokebag = lazy(() => import("./pages/Pokebag/index"));
 
 const client = new ApolloClient({
-  uri: 'https://graphql-pokeapi.vercel.app/api/graphql'
+  uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
+  cache: new InMemoryCache()
 });
-
-client.query({
-  query: gql`
-    {
-      pokemons {
-        results {
-          name
-          image
-        }
-      }
-    }
-  `
-}).then(result => console.log(result));
 
 export default function App() {
   return (
