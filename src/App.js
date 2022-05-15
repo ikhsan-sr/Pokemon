@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";import ApolloClient  from 'apollo-boost';
+import gql from 'graphql-tag'
+import { ApolloProvider } from 'react-apollo'
+import PageLoader from "./components/commons/Loader/PageLoader";
 
-function App() {
+const Home = lazy(() => import("./pages/Home/index"));
+const Detail = lazy(() => import("./pages/Detail/index"));
+const Pokebag = lazy(() => import("./pages/Pokebag/index"));
+
+const client = new ApolloClient({
+  uri: 'https://graphql-pokeapi.vercel.app/api/graphql'
+});
+
+client.query({
+  query: gql`
+    {
+      pokemons {
+        results {
+          name
+          image
+        }
+      }
+    }
+  `
+}).then(result => console.log(result));
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ApolloProvider client={client}>
+     <BrowserRouter>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:id" element={<Detail />} />
+            <Route path="/pokebag" element={<Pokebag />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </ApolloProvider>
+  )
 }
 
-export default App;
