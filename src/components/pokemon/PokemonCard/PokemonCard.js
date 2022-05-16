@@ -6,7 +6,7 @@ import { StyledPokemonCard } from './styled'
 
 export default function PokemonCard({ name, image }) {
   return (
-    <Col xs={8} sm={5} md={3} lg={2} style={{ margin: 'auto'}}>
+    <Col xs={11} sm={5} md={3} lg={2} style={{ margin: 'auto'}}>
       <Link to={`/${name}`}>
         <StyledPokemonCard>
           <div className="info">

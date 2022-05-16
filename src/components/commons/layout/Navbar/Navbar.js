@@ -13,7 +13,7 @@ export default function Navbar() {
               <img src="/assets/icons/poke-catch.png" alt="Homepage" />
             </div>
           </Col>
-          <Col xs={9} sm={9} md={9} lg={9} xl={9}>
+          <Col xs={8} sm={9} md={9} lg={9} xl={9}>
             <div className="logo-wrapper">
               <img src="/assets/icons/pokemon-icon.png" alt="Homepage" />
             </div>
