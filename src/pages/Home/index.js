@@ -1,17 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client'
+import { Container, Row } from 'emotion-flex'
+
 import { POKEMONS } from '../../query';
+import PokemonCard from '../../components/pokemon/PokemonCard/PokemonCard';
 
 export default function HomePage() {
   const { loading, error, data } = useQuery(POKEMONS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.pokemons.results.map((pokemon, index) => (
-    <Link to={`/${pokemon.name}`}key={index}>
-      <h1>{pokemon.name}</h1>
-    </Link>
-  ))
+  return (
+    <Container>
+      { loading && <p>Loading...</p> }
+      { error && <p>Error :(</p> }
+      { data && (
+        <Row>
+          { data.pokemons.results.map((pokemon, index) => (
+            <PokemonCard
+              key={index}
+              name={pokemon.name}
+              image={pokemon.image}
+            />
+          )) }
+        </Row>
+      ) }
+    </Container>
+  )
 }
