@@ -8,6 +8,7 @@ export const StyledPokemonCard = styled.div`
   margin: 0.5rem 0;
   display: flex;
 
+
   .info {
     width: 50%;
   }
