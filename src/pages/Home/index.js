@@ -27,7 +27,7 @@ export default function HomePage() {
               <PokemonCard
                 key={index}
                 name={pokemon.name}
-                image={pokemon.image}
+                image={pokemon.dreamworld}
               />
             )) }
           </Row>

@@ -17,17 +17,20 @@ export const StyledPokemonCard = styled.div`
     width: 50%;
     min-height: 100px;
     position: relative;
-
     img {
+      right: -10px;
       z-index: 2;
       position: absolute;
       height: 100%;
+      width: 100%;
     }
 
     #bg-img {
       z-index: 1;
       position: absolute;
-      height: 80%;
+      width: 150%;
+      height: 150%;
+      top: -25%;
       opacity: 0.2;
     }
 

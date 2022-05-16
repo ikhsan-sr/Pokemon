@@ -6,20 +6,28 @@ export const POKEMONS = gql`
       results {
         name
         image
+        image
+        artwork
+        dreamworld
       }
     }
   }
 `;
 
 export const POKEMON = gql`
-  query pokemon($name: String!) {
+  query Pokemon($name: String!) {
     pokemon(name: $name) {
       id
+      height
       name
+      weight
       moves {
         move {
           name
         }
+      }
+      sprites {
+        front_default
       }
       types {
         type {
