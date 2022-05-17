@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import PageLoader from "./components/commons/Loader/PageLoader";
-import Layout from "./components/commons/layout/Layout";
 
 const Home = lazy(() => import("./pages/Home/index"));
 const Detail = lazy(() => import("./pages/Detail/Detail"));
@@ -15,7 +14,6 @@ const client = new ApolloClient({
 
 export default function App() {
   return (
-    <Layout>
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Suspense fallback={<PageLoader />}>
@@ -27,7 +25,6 @@ export default function App() {
           </Suspense>
         </BrowserRouter>
       </ApolloProvider>
-    </Layout>
   )
 }
 
