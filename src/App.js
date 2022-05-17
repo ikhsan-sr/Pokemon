@@ -5,7 +5,7 @@ import PageLoader from "./components/commons/Loader/PageLoader";
 import Layout from "./components/commons/layout/Layout";
 
 const Home = lazy(() => import("./pages/Home/index"));
-const Detail = lazy(() => import("./pages/Detail/index"));
+const Detail = lazy(() => import("./pages/Detail/Detail"));
 const Pokebag = lazy(() => import("./pages/Pokebag/index"));
 
 const client = new ApolloClient({
