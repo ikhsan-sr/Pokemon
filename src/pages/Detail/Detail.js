@@ -8,10 +8,16 @@ import { useOnClickOutside } from '../../utils/helpers';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 import Layout from '../../components/commons/layout/Layout';
+import Loader from './Loader';
+
 import { StyledDetail, StyledModal} from './styled';
 
-
 export default function Detail() {
+  const [name, setName]                 = useState('');
+  const [success, setSuccess]           = useState(false);
+  const [openModal, setOpenModal]       = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const cardRef   = useRef();
   const params    = useParams();
   const history   = useNavigate();
@@ -20,10 +26,6 @@ export default function Detail() {
   const { loading, error, data } = useQuery(POKEMON, { variables: { name: params.name } });
   const [pokemons, setPokemons]  = useLocalStorage('pokemons', []);
 
-  const [name, setName]                 = useState('');
-  const [success, setSuccess]           = useState(false);
-  const [openModal, setOpenModal]       = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useOnClickOutside(cardRef, () => setOpenModal(false));
 
@@ -41,40 +43,41 @@ export default function Detail() {
     setSuccess(true);
   }
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <Layout>
       <Container>
-        <StyledDetail>
-          <div className="img-wrapper">
-            <img
-              src={state.image}
-              alt={data.pokemon.name}
-              className="pokemon-img"
-            />
-            <img
-              src="/assets/icons/pokemon-icon.png"
-              alt="Catch pokemon"
-              className="catch"
-              onClick={() => setOpenModal(true)}
-            />
-          </div>
+        { loading ? <Loader /> : (
+          <StyledDetail>
+            <div className="img-wrapper">
+              <img
+                src={state.image}
+                alt={data.pokemon.name}
+                className="pokemon-img"
+              />
+              <img
+                src="/assets/icons/pokemon-icon.png"
+                alt="Catch pokemon"
+                className="catch"
+                onClick={() => setOpenModal(true)}
+              />
+            </div>
 
-          <h1 className="name">{data.pokemon.name}</h1>
+            <h1 className="name">{data.pokemon.name}</h1>
 
-          <div className="detail">
-            <h1>Moves</h1><hr/>
-            {data.pokemon.moves.map((item, index) => (
-              <p key={index}>{item.move.name.replaceAll('-', ' ')}</p>
-            ))}
-            <h1>Types</h1><hr/>
-            {data.pokemon.types.map((item, index) => (
-              <p key={index}>{item.type.name.replaceAll('-', ' ')}</p>
-            ))}
-          </div>
-        </StyledDetail>
+            <div className="detail">
+              <h1>Moves</h1><hr/>
+              {data.pokemon.moves.map((item, index) => (
+                <p key={index}>{item.move.name.replaceAll('-', ' ')}</p>
+              ))}
+              <h1>Types</h1><hr/>
+              {data.pokemon.types.map((item, index) => (
+                <p key={index}>{item.type.name.replaceAll('-', ' ')}</p>
+              ))}
+            </div>
+          </StyledDetail>
+        ) }
 
         <StyledModal open={openModal}>
           <div className="card" ref={cardRef}>
@@ -103,6 +106,7 @@ export default function Detail() {
             </div>
           </div>
         </StyledModal>
+
       </Container>
     </Layout>
   )
