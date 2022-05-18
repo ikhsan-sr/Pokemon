@@ -1,43 +1,48 @@
 import React, { useState, useRef } from 'react'
-import { useParams, useLocation } from "react-router-dom"
+import { useParams, useLocation, useNavigate } from "react-router-dom"
 import {Container} from 'emotion-flex';
 
 import { useQuery } from '@apollo/client'
 import { POKEMON } from '../../query';
 import { useOnClickOutside } from '../../utils/helpers';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 import Layout from '../../components/commons/layout/Layout';
 import { StyledDetail, StyledModal} from './styled';
 
 
 export default function Detail() {
-  const cardRef = useRef();
-  const params = useParams();
+  const cardRef   = useRef();
+  const params    = useParams();
+  const history   = useNavigate();
   const { state } = useLocation();
-  const { loading, error, data } = useQuery(POKEMON, { variables: { name: params.name } });
 
-  const [name, setName] = useState('');
-  const [openModal, setOpenModal] = useState(false);
+  const { loading, error, data } = useQuery(POKEMON, { variables: { name: params.name } });
+  const [pokemons, setPokemons]  = useLocalStorage('pokemons', []);
+
+  const [name, setName]                 = useState('');
+  const [success, setSuccess]           = useState(false);
+  const [openModal, setOpenModal]       = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useOnClickOutside(cardRef, () => setOpenModal(false));
 
   const handleAdd = () => {
-    if (!name) {
-      setErrorMessage('Please enter a name');
-    } else {
-      console.log('add', {
-        name: name,
-        pokemon_image: state.image,
-        pokemon_name: data.pokemon.name,
-      })
+    if (!name) return setErrorMessage('Please enter a name');
+    if (pokemons.find(pokemon => pokemon.name === name)) return setErrorMessage('Pokemon already exists, please enter another name!');
+
+    const newPokemon = {
+      name: name,
+      pokemon_image: state.image,
+      pokemon_name: data.pokemon.name,
     }
+
+    setPokemons([...pokemons, newPokemon ]);
+    setSuccess(true);
   }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
-  console.log('state',state);
 
   return (
     <Layout>
@@ -74,15 +79,27 @@ export default function Detail() {
         <StyledModal open={openModal}>
           <div className="card" ref={cardRef}>
             <div className="content">
-              <h1>Gotcha!</h1>
-              <input type="text"
-                placeholder="Now enter your wartortle nickname"
-                onChange={(e) => setName(e.target.value)}
-              />
-              { errorMessage && <div className="error">{ errorMessage }</div> }
-              <button onClick={handleAdd}>
-                Submit
-              </button>
+              {!success ? (
+                <>
+                  <h1>Gotcha!</h1>
+                  <input type="text"
+                    placeholder="Now enter your wartortle nickname"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  { errorMessage && <div className="error">{ errorMessage }</div> }
+                  <button onClick={handleAdd}>
+                    Submit
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h1>Your Pokemon is safe!</h1>
+                  { errorMessage && <div className="error">{ errorMessage }</div> }
+                  <button onClick={() => history('/pokebag')}>
+                    See PokeBag
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </StyledModal>
