@@ -1,5 +1,5 @@
 import Navbar from "./Navbar/Navbar";
-import Footer from "./Footer/Footer";
+// import Footer from "./Footer/Footer";
 import { GlobalStyle } from "../../../styles/Global.style";
 
 export default function Layout({children}) {
@@ -7,7 +7,7 @@ export default function Layout({children}) {
     <GlobalStyle>
       <Navbar />
         {children}
-      <Footer />
+      {/* <Footer /> */}
     </GlobalStyle>
   )
 }
