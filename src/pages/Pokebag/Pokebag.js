@@ -31,7 +31,15 @@ export default function Pokebag() {
                 />
               )) }
             </Row>
-          ) : <p>No pokemons yet</p> }
+          ) : (
+            <div className="empty">
+              <img
+                src="/assets/image/pokemon-sad.png"
+                alt="Not found"
+              />
+              <h3>Your bag is empty</h3>
+            </div>
+          ) }
         </Container>
       </StyledPokebag>
     </Layout>
