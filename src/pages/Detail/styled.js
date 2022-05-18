@@ -1,6 +1,24 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 
+const bounce = keyframes`
+  from, 20%, 53%, 80%, to {
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0,-4px,0);
+  }
+`
+
 export const StyledDetail = styled.div`
   margin-top: 2rem;
   text-align: center;
@@ -26,6 +44,7 @@ export const StyledDetail = styled.div`
       bottom: -50px;
       left: calc(50% - 50px);
       z-index: 3;
+      animation: ${bounce} 1s ease infinite;
     }
   }
 
