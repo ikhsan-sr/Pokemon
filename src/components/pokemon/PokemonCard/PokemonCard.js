@@ -32,13 +32,13 @@ export default function PokemonCard({ name = '', image = '', canDelete = false, 
             <StyledPokemonCard bg={bgcolor(name)} canDelete={canDelete}>
               <div className="info">
                 { nameBag && <div className="title-bag">{nameBag}</div> }
-                <Link to={`/${name}`} state={{ image }} style={{ zIndex: 1 }}>
+                <Link to={`/${name}`} state={{ image, bg: bgcolor(name) }} style={{ zIndex: 1 }}>
                   <div className="title-pokemon">{name}</div>
                 </Link>
               </div>
 
               <div className="image">
-                <Link to={`/${name}`} state={{ image }}>
+                <Link to={`/${name}`} state={{ image, bg: bgcolor(name) }}>
                   <img src={image} alt={name} />
                   <img src="/assets/icons/pokemon-symbol.svg" alt="pokemon" id="bg-img"/>
                 </Link>
@@ -51,7 +51,7 @@ export default function PokemonCard({ name = '', image = '', canDelete = false, 
           </Col>
         ) : (
           <Col xs={8} sm={5} md={3} lg={2} style={{ margin: 'auto'}}>
-            <Link to={`/${name}`} state={{ image }} style={{ zIndex: 1 }}>
+            <Link to={`/${name}`} state={{ image, bg: bgcolor(name) }} style={{ zIndex: 1 }}>
               <StyledPokemonCard bg={bgcolor(name)} canDelete={canDelete}>
                 <div className="info">
                   { nameBag && <div className="title-bag">{nameBag}</div> }
