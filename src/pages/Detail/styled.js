@@ -24,7 +24,8 @@ export const StyledDetail = styled.div`
   text-align: center;
 
   .img-wrapper {
-    background-color: #FFE023;
+    background-color: ${props => props.bg || '#FFE023'};
+    /* background-color: #FFE023; */
     max-width: 800px;
     margin: auto;
     padding: 2rem;

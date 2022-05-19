@@ -6,7 +6,7 @@ export default function Loader() {
     let content = [];
 
     for (let i = 0; i < 60; i++) {
-      content.push(<div className="item-detail"/>)
+      content.push(<div className="item-detail" key={i} />)
     }
 
     return content;

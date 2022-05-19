@@ -49,7 +49,7 @@ export default function Detail() {
     <Layout>
       <Container>
         { loading ? <Loader /> : (
-          <StyledDetail>
+          <StyledDetail bg={state.bg}>
             <div className="img-wrapper">
               <img
                 src={state.image}
