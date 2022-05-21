@@ -31,6 +31,7 @@ export default function Detail() {
 
   const handleAdd = () => {
     if (!name) return setErrorMessage('Please enter a name');
+    if (Math.random() < 0.5) return setErrorMessage('Sorry, failed to catch the pokemon, please try again!');
     if (pokemons.find(pokemon => pokemon.name === name)) return setErrorMessage('Pokemon already exists, please enter another name!');
 
     const newPokemon = {
@@ -40,6 +41,7 @@ export default function Detail() {
     }
 
     setPokemons([...pokemons, newPokemon ]);
+    setErrorMessage('');
     setSuccess(true);
   }
 
